@@ -71,15 +71,15 @@ ___TEMPLATE_PARAMETERS___
     "selectItems": [
       {
         "displayValue": "EMEA",
-        "value": "ams."
+        "value": "ams"
       },
       {
         "displayValue": "Americas",
-        "value": "us."
+        "value": "us"
       },
       {
         "displayValue": "Asia",
-        "value": "asia."
+        "value": "asia"
       }
     ],
     "enablingConditions": [
@@ -472,101 +472,16 @@ ___WEB_PERMISSIONS___
 ]
 
 
-___JS_TEMPLATE___
-
-$gtmExport(function(data) {
-  var taggingHash = data[$taggingHash];
-  var region = data[$region];
-  var pageType = data[$pageType];
-  var url = gtmUtils.web.buildSafeUrl('https:', 'http:',
-      '//' + region + '.creativecdn.com/tags?type=script&id=pr_' + taggingHash);
-
-  switch(pageType) {
-    case '_home':
-      url += '_home';
-      break;
-    case '_startorder':
-      url += '_startorder';
-      break;
-    case '_offer':
-      var offerId = data[$offerId];
-      url += offerId ? '_offer_' + offerId : '';
-      break;
-    case '_listing':
-      var listingOffersIds = data[$listingOffersIds];
-      url += listingOffersIds ? '_listing_' + listingOffersIds : '';
-      break;
-    case '_basket':
-      var basketOffersIds = data[$basketOffersIds];
-      url += basketOffersIds ?
-          '_basketstatus_' + basketOffersIds : '_basket';
-      break;
-    case '_category2':
-      var category = data[$category];
-      url += category ? '_category2_' + category : '';
-      break;
-    case '_orderstatus2':
-      var orderValue = Number(String(data[$orderValue]).replace(',', '.'));
-      orderValue = isNaN(orderValue) ? null : orderValue;
-      var orderId = data[$orderId] ?
-          String(data[$orderId]).replace(/_/g, '-') : null;
-      var orderOffersIds = data[$orderOffersIds] ?
-          data[$orderOffersIds] : null;
-
-      if(orderValue && orderId && orderOffersIds) {
-        url += '_orderstatus2_' +
-            orderValue + '_' + orderId + '_' + orderOffersIds;
-      } else if(orderValue && !orderId && orderOffersIds) {
-        url += '_orderstatus_' + orderValue + '_' + orderOffersIds;
-      } else if(orderValue && !orderId && !orderOffersIds) {
-        url += '_ordervalue_' + orderValue;
-      } else if(!orderValue && orderId && orderOffersIds) {
-        url += '_orderstatus2_0_' + orderId + '_' + orderOffersIds;
-      } else if(!orderValue && !orderId && orderOffersIds) {
-        url += '_orderstatus_0_' + orderOffersIds;
-      } else if(!orderValue && orderId && !orderOffersIds) {
-        url += '_orderstatus2_0_' + orderId + '_';
-      } else {
-        url += '_order';
-      }
-
-      if(data[$useDefaultDeduplication] === false) {
-        url+= '&cd=' + data[$deduplicationMacroValue];
-      }
-      break;
-    case '_orderclick':
-      var orderClickOfferId = data[$orderClickOfferId];
-      url += '_orderclick_' + (orderClickOfferId || '');
-
-      if(data[$useDefaultDeduplication] === false) {
-        url += '&cd=' + data[$deduplicationMacroValue];
-      }
-      break;
-  }
-
-  // Encoding is required in JS. This is the easiest to audit.
-  var encodedUrl = gtmUtils.common.encodeURI(url);
-  gtmUtils.web.loadJavaScript(
-      encodedUrl, data[$gtmOnSuccess], data[$gtmOnFailure]);
-});
-
-
-___NOSCRIPT_TEMPLATE___
-
-<iframe src="{{#gtmHttp}}http:{{/gtmHttp}}{{#gtmHttps}}https:{{/gtmHttps}}//{{region:escapeUri}}.creativecdn.com/tags?id=pr_{{taggingHash:escapeUri}}}{{pageType:escapeUri}}{{#offerId}}_{{offerId:escapeUri}}{{/offerId}}{{#category}}_{{category:escapeUri}}{{/category}}{{#orderValue}}_{{orderValue:escapeUri}}_{{#orderId}}{{orderId:escapeUri}}{{/orderId}}_{{#orderOffersIds}}{{orderOffersIds:escapeUri}}{{/orderOffersIds}}{{/orderValue}}{{#orderClickOfferId}}_{{orderClickOfferId:escapeUri}}{{/orderClickOfferId}}" width="1" height="1" scrolling="no" frameBorder="0"></iframe>
-
-
 ___SANDBOXED_JS_FOR_WEB_TEMPLATE___
 
 var injectHiddenIframe = require('injectHiddenIframe');
 var encodeUriComponent = require('encodeUriComponent');
 var makeString = require('makeString');
 
-var taggingHash = data.taggingHash;
-var region = data.region;
-var pageType = data.pageType;
-var url = 'https://' + region + 'creativecdn.com/tags?type=iframe&id=pr_' + taggingHash;
-var tagValue = '';
+var taggingHash = makeString(data.taggingHash);
+var region = makeString(data.region);
+var pageType = makeString(data.pageType);
+var tagValue = 'pr_' + taggingHash;
 
 switch(pageType) {
   case '_home':
@@ -646,7 +561,7 @@ switch(pageType) {
     break;
 }
 
-url += encodeUriComponent(tagValue);
+var url = 'https://' + encodeUriComponent(region) + '.creativecdn.com/tags?type=iframe&id=' + encodeUriComponent(tagValue);
 
 injectHiddenIframe(url, data.gtmOnSuccess);
 
