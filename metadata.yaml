@@ -1,5 +1,5 @@
 homepage: "www.rtbhouse,com",
 documentation: "https://github.com/rtbhouse-apps/gtm-tag-template/blob/master/README.md",
 versions:
-  - sha: 45b3315882e1ceabeeb99b050424d80f96d303ad
+  - sha: dbb1267a3900ff737c3d17791b005a44949997f9
     changeNotes: Initial version.
