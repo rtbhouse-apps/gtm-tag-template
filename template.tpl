@@ -602,7 +602,6 @@ var encodeUriComponent = require('encodeUriComponent');
 var makeString = require('makeString');
 var localStorage = require('localStorage');
 var Math = require('Math');
-var logToConsole = require('logToConsole');
 var getReferrerUrl = require('getReferrerUrl');
 var getUrl = require('getUrl');
 var getTimestampMillis = require('getTimestampMillis');
@@ -782,10 +781,6 @@ var source =
     '&ts=' +
     encodeUriComponent(timestamp);
 
-logToConsole(data);
-logToConsole(tags.join('\n'));
-logToConsole(source);
-
 injectHiddenIframe(source, data.gtmOnSuccess);
 
 
@@ -815,24 +810,6 @@ ___WEB_PERMISSIONS___
     },
     "clientAnnotations": {
       "isEditedByUser": true
-    },
-    "isRequired": true
-  },
-  {
-    "instance": {
-      "key": {
-        "publicId": "logging",
-        "versionId": "1"
-      },
-      "param": [
-        {
-          "key": "environments",
-          "value": {
-            "type": 1,
-            "string": "debug"
-          }
-        }
-      ]
     },
     "isRequired": true
   },
