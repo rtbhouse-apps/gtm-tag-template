@@ -161,7 +161,7 @@ ___TEMPLATE_PARAMETERS___
             "help": "Select variable that contains product ID."
           }
         ],
-        "help": "The code should be pasted into pages displaying new products.",
+        "help": "The code should be pasted into pages displaying products which the user added to the wish list or favorites list.",
         "valueValidators": []
       },
       {
@@ -500,7 +500,7 @@ ___TEMPLATE_PARAMETERS___
       {
         "type": "CHECKBOX",
         "name": "tagSid",
-        "checkboxText": "Session id",
+        "checkboxText": "Session ID",
         "simpleValueType": true,
         "subParams": [
           {
