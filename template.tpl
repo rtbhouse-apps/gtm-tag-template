@@ -425,13 +425,13 @@ ___TEMPLATE_PARAMETERS___
       {
         "type": "CHECKBOX",
         "name": "tagSize",
-        "checkboxText": "Product size or color selection event",
+        "checkboxText": "Product size selection event",
         "simpleValueType": true,
         "subParams": [
           {
             "type": "SELECT",
-            "name": "sizeOrColor",
-            "displayName": "Variable containing the size or color of the currently viewed product.",
+            "name": "productSize",
+            "displayName": "Variable containing the size of the currently viewed product.",
             "macrosInSelect": true,
             "selectItems": [],
             "simpleValueType": true,
@@ -442,10 +442,10 @@ ___TEMPLATE_PARAMETERS___
                 "type": "EQUALS"
               }
             ],
-            "help": "Select variable that contains string that describes product size or color (e.g., S, XXL, medium, red, white, 38, 44)"
+            "help": "Select variable that contains string that describes product size or (e.g., S, XXL, medium, 38, 44)"
           }
         ],
-        "help": "The code should be executed when a user selects a product size or color. The code should not be triggered with a default value."
+        "help": "The code should be executed when a user selects a product size. The code should not be triggered with a default value."
       },
       {
         "type": "CHECKBOX",
@@ -625,10 +625,8 @@ if (!lid) {
   localStorage.setItem(localStorageKey, lid);
 }
 
-var siteReferrer = getReferrerUrl() ? getReferrerUrl() : '';
-var siteUrl = getUrl() ? getUrl() : '';
-var querySeparator = siteUrl.indexOf('?') > -1 ? '&' : '?';
-var finalUrl = siteUrl + querySeparator + 'sr=' + encodeUriComponent(siteReferrer);
+var siteReferrer = getReferrerUrl() ? encodeUriComponent(getReferrerUrl()) : '';
+var siteUrl = getUrl() ? encodeUriComponent(getUrl()) : '';
 var timestamp = makeString(getTimestampMillis());
 
 var taggingHash = makeString(data.advTaggingHash);
@@ -724,8 +722,8 @@ tagsRaw.forEach( (tag) => {
       break;
       
     case 'tagSize':
-      var sizeOrColor = data.sizeOrColor ? makeString(data.sizeOrColor) : '';
-      code = tagValue + '_size_' + sizeOrColor;
+      var productSize = data.productSize ? makeString(data.productSize) : '';
+      code = tagValue + '_size_' + productSize;
 
       break;
       
@@ -777,7 +775,9 @@ var source =
     '_lid_' +
     encodeUriComponent(lid) +
     '&su=' +
-    encodeUriComponent(finalUrl) +
+    siteUrl +
+    '&sr=' +
+    siteReferrer +
     '&ts=' +
     encodeUriComponent(timestamp);
 
