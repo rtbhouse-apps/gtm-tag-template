@@ -6,8 +6,8 @@
     "description": "Tag help.",
     "text": "If you have any questions, contact your RTB House Customer Service Manager."
   },
-  "displayName": "RTB House Retargeting Tag",
-  "description": "RTB House Retargeting Tag",
+  "displayName": "RTB House Tag",
+  "description": "RTB House Tag",
   "categories": [
     "REMARKETING",
     "PERSONALIZATION",
