@@ -1,5 +1,9 @@
 homepage: "www.rtbhouse,com",
 documentation: "https://github.com/rtbhouse-apps/gtm-tag-template/blob/master/README.md",
 versions:
+  # Latest version
   - sha: c5c60f66af2ec4e871ce37489305a2e1584b2682
     changeNotes: This update brings the capability of adding multiple tag types on a single page along with new tag types.
+  # Older versions
+  - sha: dbb1267a3900ff737c3d17791b005a44949997f9
+    changeNotes: Initial version.
