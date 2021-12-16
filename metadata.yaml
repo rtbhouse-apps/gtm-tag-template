@@ -2,8 +2,11 @@ homepage: "www.rtbhouse,com",
 documentation: "https://github.com/rtbhouse-apps/gtm-tag-template/blob/master/README.md",
 versions:
   # Latest version
+  - sha: abf21fcd5fe2a3702a97f737cd2eb4837c86fa23
+    changeNotes: Fix random string generator for lid value
+  # Older versions
   - sha: ee0f36ca4c650d504de9831cf6c6096289becc1c
     changeNotes: This update brings the capability of adding multiple tag types on a single page along with new tag types.
-  # Older versions
+
   - sha: dbb1267a3900ff737c3d17791b005a44949997f9
     changeNotes: Initial version.

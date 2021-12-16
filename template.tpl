@@ -624,11 +624,11 @@ for (var key in data) {
 
 var localStorageKey = '__rtbhouse.lid';
 var lid = localStorage.getItem(localStorageKey);
-if (!lid) {
+if (!lid || lid.length !== 20) {
   lid = '';
   var pool = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   for (var i = 0; i < 20; i++) {
-    lid += pool.charAt(generateRandom(0, pool.length));
+    lid += pool.charAt(generateRandom(0, pool.length - 1));
   }
   localStorage.setItem(localStorageKey, lid);
 }
@@ -647,131 +647,131 @@ var tagValue = '&id=pr_' + taggingHash;
 tagsRaw.forEach( (tag) => {
 
   var code = '';
-  
+
   switch(tag) {
-      
+
     case 'tagOther':
       code = tagValue + (tagsRaw.length === 1 ? '&ncm=1' : '');
-      
+
       break;
-      
+
     case 'tagHome':
       code = tagValue + '_home';
-      
+
       break;
-      
+
     case 'tagOffer':
       var offerId = data.offerOfferId ? makeString(data.offerOfferId) : '';
       code = tagValue + '_offer_' + offerId;
-      
+
       break;
-      
+
     case 'tagListing':
       var listingOfferIds = data.listingOfferIds ? makeString(data.listingOfferIds) : '';
       code = tagValue + '_listing_' + listingOfferIds;
-      
+
       break;
-      
+
     case 'tagCategory':
       var category = data.category ? makeString(data.category) : '';
       code = tagValue + '_category2_' + category;
-      
+
       break;
-      
+
     case 'tagBasketAdd':
       var basketAddOfferId = data.basketAddOfferId ? makeString(data.basketAddOfferId) : '';
       code = tagValue + '_basketadd_' + basketAddOfferId;
-      
+
       break;
-      
+
     case 'tagBasketStatus':
       var basketStatusOfferIds = data.basketStatusOfferIds ? makeString(data.basketStatusOfferIds) : '';
       code = tagValue + '_basketstatus_' + basketStatusOfferIds;
-     
+
       break;
-      
+
     case 'tagStartOrder':
       code = tagValue + '_startorder';
-      
+
       break;
-      
+
     case 'tagOrderClick':
       var orderClickValue = data.orderClickValue ? makeString(data.orderClickValue).replace(',', '.') : '';
       var orderClickOrderId = data.orderClickOrderId ? makeString(data.orderClickOrderId).split('_').join('-') : '';
       var orderClickOfferId = data.orderClickOfferId ? makeString(data.orderClickOfferId) : '';
       code = tagValue + '_orderclick3_' + orderClickValue + '_' + orderClickOrderId + '_' + orderClickOfferId;
-      
+
       break;
-      
+
     case 'tagOrderStatus':
       var orderStatusValue = data.orderStatusValue ? makeString(data.orderStatusValue).replace(',', '.') : '';
       var orderStatusOrderId = data.orderStatusOrderId ? makeString(data.orderStatusOrderId).split('_').join('-') : '';
       var orderStatusOfferIds = data.orderStatusOfferIds ? makeString(data.orderStatusOfferIds) : '';
       code = tagValue + '_orderstatus2_' + orderStatusValue + '_' + orderStatusOrderId + '_' + orderStatusOfferIds;
-      
+
       break;
-      
+
     case 'tagUid':
       var uid = data.uid ? makeString(data.uid) : '';
       code = tagValue + '_uid_' + uid;
-      
+
       break;
-      
+
     case 'tagAid':
       var aid = data.aid ? makeString(data.aid) : '';
       code = tagValue + '_aid_' + aid;
-      
+
       break;
-      
+
     case 'tagSid':
       var sid = data.sid ? makeString(data.sid) : '';
       code = tagValue + '_sid_' + sid;
 
       break;
-      
+
     case 'tagSize':
       var productSize = data.productSize ? makeString(data.productSize) : '';
       code = tagValue + '_size_' + productSize;
 
       break;
-      
+
     case 'tagOfflineCheck':
       code = tagValue + '_offlinecheck';
-      
+
       break;
-     
+
     case 'tagNewProducts':
       code = tagValue + '_newoffers';
-      
+
       break;
-      
+
     case 'tagSales':
       code = tagValue + '_sales';
-      
+
       break;
-      
+
     case 'tagWishlist':
       var wishlistOfferId = data.wishlistOfferId ? makeString(data.wishlistOfferId) : '';
       code = tagValue + '_wishlist_' + wishlistOfferId;
-      
+
       break;
-      
+
     case 'tagCustom':
       var customTagsTable = data.customTagsTable;
       customTagsTable.forEach( (customTag) => {
-      
+
           var customTagName = makeString(customTag.customTagName).split('_').join('-');
           var customTagValue = makeString(customTag.customTagValue);
           code += tagValue + '_custom_' + customTagName + '_' + customTagValue;
-      
+
       });
-      
+
       break;
-      
+
   }
-  
+
   tags.push(code);
-  
+
 });
 
 var source =
