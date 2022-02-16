@@ -402,6 +402,37 @@ ___TEMPLATE_PARAMETERS___
             ],
             "help": "Select variable that contains string with comma separated IDs of products or array with products IDs that are currently in the shopping cart. Example: \u0027123,456,789\u0027 or [\u0027123\u0027, \u0027456\u0027, \u0027789\u0027]",
             "valueValidators": []
+          },
+          {
+            "type": "CHECKBOX",
+            "name": "orderStatusCustomDeduplicationCheck",
+            "checkboxText": "Custom Deduplication",
+            "simpleValueType": true,
+            "help": "(Optional) Select variable that returns false when the order is attributed to RTB House, and true when the order is attributed to a source other than RTB House.",
+            "enablingConditions": [
+              {
+                "paramName": "tagOrderStatus",
+                "paramValue": true,
+                "type": "EQUALS"
+              }
+            ],
+            "subParams": [
+              {
+                "type": "SELECT",
+                "name": "orderStatusCustomDeduplication",
+                "displayName": "Select variable:",
+                "macrosInSelect": true,
+                "selectItems": [],
+                "simpleValueType": true,
+                "enablingConditions": [
+                  {
+                    "paramName": "orderStatusCustomDeduplicationCheck",
+                    "paramValue": true,
+                    "type": "EQUALS"
+                  }
+                ]
+              }
+            ]
           }
         ]
       },
@@ -707,7 +738,11 @@ tagsRaw.forEach( (tag) => {
       var orderStatusValue = data.orderStatusValue ? makeString(data.orderStatusValue).replace(',', '.') : '';
       var orderStatusOrderId = data.orderStatusOrderId ? makeString(data.orderStatusOrderId).split('_').join('-') : '';
       var orderStatusOfferIds = data.orderStatusOfferIds ? makeString(data.orderStatusOfferIds) : '';
-      code = tagValue + '_orderstatus2_' + orderStatusValue + '_' + orderStatusOrderId + '_' + orderStatusOfferIds;
+      var cdEnabled = data.orderStatusCustomDeduplicationCheck;
+      var rawCd = data.orderStatusCustomDeduplication;
+      var cdIfEnabled = rawCd === 'false' || rawCd === false ? 'false' : 'true';
+      var cd = !cdEnabled ? 'default' : cdIfEnabled;
+      code = tagValue + '_orderstatus2_' + orderStatusValue + '_' + orderStatusOrderId + '_' + orderStatusOfferIds + '&cd=' + cd;
 
       break;
 
