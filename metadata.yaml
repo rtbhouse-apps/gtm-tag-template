@@ -2,7 +2,7 @@ homepage: "www.rtbhouse,com",
 documentation: "https://github.com/rtbhouse-apps/gtm-tag-template/blob/master/README.md",
 versions:
   # Latest version
-  - sha: -
+  - sha: fda507bb7b7a28940110fe488b7d8e04bb6a5ab2
     changeNotes: Added optional cd param to Order confirmation page tag
   # Older versions
   - sha: abf21fcd5fe2a3702a97f737cd2eb4837c86fa23
